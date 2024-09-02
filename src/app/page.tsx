@@ -1,8 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import styles from "./page.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
+import Layout from "@/components/layout";
+import Trade from "@/components/trade";
+import { Program } from '@aleohq/sdk'
 
 export default function Home() {
     const [account, setAccount] = useState(null);
@@ -46,49 +47,28 @@ export default function Home() {
     }, []);
 
     return (
-        <main className={styles.main}>
-            <div className={styles.description}>
-                <p>
-                    Get started by editing&nbsp;
-                    <code className={styles.code}>src/app/page.tsx</code>
-                </p>
-            </div>
 
-            <div className={styles.center}>
-                <Image
-                    className={styles.logo}
-                    src="/next.svg"
-                    alt="Next.js Logo"
-                    width={180}
-                    height={37}
-                    priority
-                />
-                <Image
-                    className={styles.logo}
-                    src="/aleo.svg"
-                    alt="Next.js Logo"
-                    width={180}
-                    height={45}
-                    priority
-                />
+        <Layout>
+            <div className="text-center">
+                <h2 className="text-2xl font-bold">Welcome to the Dashboard</h2>
+                <p className="mt-4">This is where you can manage your trades.</p>
+                <div>
+                    <p>
+                        <button onClick={generateAccount}>
+                            {account
+                                ? `Account private key is ${JSON.stringify(account)}`
+                                : `Click to generate account`}
+                        </button>
+                    </p>
+                    <p>
+                        <button disabled={executing} onClick={execute}>
+                            {executing
+                                ? `Executing...check console for details...`
+                                : `Execute helloworld.aleo`}
+                        </button>
+                    </p>
+                </div>
             </div>
-
-            <div className={styles.card}>
-                <p>
-                    <button onClick={generateAccount}>
-                        {account
-                            ? `Account private key is ${JSON.stringify(account)}`
-                            : `Click to generate account`}
-                    </button>
-                </p>
-                <p>
-                    <button disabled={executing} onClick={execute}>
-                        {executing
-                            ? `Executing...check console for details...`
-                            : `Execute helloworld.aleo`}
-                    </button>
-                </p>
-            </div>
-        </main>
+        </Layout>
     );
 }
